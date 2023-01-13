@@ -1,0 +1,14 @@
+.header{
+    margin-top: 10px;
+}
+.nav-links{
+    text-decoration: none;
+    color: rgb(77, 77, 148);
+    padding: 5px 10px;
+    font-weight: 600;
+    font-size: small;
+}
+
+.nav-links:hover{
+    font-weight: 700;
+}
