@@ -5,8 +5,8 @@ import './Header.css';
 const Header = () => {
     return (
         <div className='header'>
-            <Link className='nav-links' to="/">Home</Link>
-            <Link className='nav-links' to="/signin">Sign In</Link>
+            <Link className='nav-links' to="/home">Home</Link>
+            <Link className='nav-links' to="/">Sign In</Link>
         </div>
     );
 };
