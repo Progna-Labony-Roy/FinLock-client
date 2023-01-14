@@ -14,9 +14,6 @@ const SignIn = () => {
   if(token){
     navigate('/')
   }
-  else{
-    navigate('/signin')
-  }
 
   const handleSubmit = event =>{
     event.preventDefault();

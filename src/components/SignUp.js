@@ -77,7 +77,7 @@ const SignUp = () => {
     <div className="flex justify-center">
       <form onSubmit={handleSubmit(handleSignup)}>
         <div className="shadow-sm -space-y-px">
-        <p className="signup-text my-3">
+        <p className="signup-text my-4">
         Let's connect to your workspace.
         <br />
         Please enter your credentials to continue
@@ -90,7 +90,7 @@ const SignUp = () => {
             type="text"
             placeholder="Name"
             className="appearance-none rounded-none relative block
-            w-full px-3 py-2 my-3 border border-gray-300
+            w-full px-3 py-2 mt-3 border border-gray-300
             placeholder-gray-500 text-gray-900
             focus:outline-none focus:ring-indigo-500
             focus:border-indigo-500 focus:z-10 sm:text-sm"
@@ -108,7 +108,7 @@ const SignUp = () => {
             name="email"
             placeholder="Email address"
             className="appearance-none rounded-none relative block
-            w-full px-3 py-2 my-3 border border-gray-300
+            w-full px-3 py-2 mt-3 border border-gray-300
             placeholder-gray-500 text-gray-900
             focus:outline-none focus:ring-indigo-500
             focus:border-indigo-500 focus:z-10 sm:text-sm"
@@ -130,7 +130,7 @@ const SignUp = () => {
             type="password"
             placeholder="Password"
             className="appearance-none rounded-none relative block
-            w-full px-3 py-2 my-3 border border-gray-300
+            w-full px-3 py-2 mt-3 border border-gray-300
             placeholder-gray-500 text-gray-900
             focus:outline-none focus:ring-indigo-500
             focus:border-indigo-500 focus:z-10 sm:text-sm"
