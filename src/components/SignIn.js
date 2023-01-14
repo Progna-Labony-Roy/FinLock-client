@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/UserContext";
 import useToken from "../Hooks/useToken";
@@ -7,9 +8,15 @@ import "./SignIn.css";
 const SignIn = () => {
   const {user,signIn} =useContext(AuthContext);
   const [token] =useToken(user?.email);
-  console.log(token)
   const navigate=useNavigate();
   const [loginError ,setLoginError] = useState('');
+
+  if(token){
+    navigate('/')
+  }
+  else{
+    navigate('/signin')
+  }
 
   const handleSubmit = event =>{
     event.preventDefault();
@@ -21,11 +28,7 @@ const SignIn = () => {
     signIn(email, password)
     .then(result=>{
       const user =result.user;
-      if(token){
-        navigate('/')
-      }
-      
-
+      toast.success("Sign In successful")
     //   const currentUser ={
     //     email:user.email
     //   }
