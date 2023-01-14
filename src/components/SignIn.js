@@ -1,17 +1,19 @@
-import React, { useContext } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/UserContext";
+import useToken from "../Hooks/useToken";
 import "./SignIn.css";
 
 const SignIn = () => {
-  const {signIn} =useContext(AuthContext);
+  const {user,signIn} =useContext(AuthContext);
+  const [token] =useToken(user?.email);
+  console.log(token)
   const navigate=useNavigate();
-  const location=useLocation();
-
-  const from = location.state?.from?.pathname || "/";
+  const [loginError ,setLoginError] = useState('');
 
   const handleSubmit = event =>{
     event.preventDefault();
+    setLoginError('');
     const form =event.target;
     const email = form.email.value;
     const password= form.password.value;
@@ -19,6 +21,10 @@ const SignIn = () => {
     signIn(email, password)
     .then(result=>{
       const user =result.user;
+      if(token){
+        navigate('/')
+      }
+      
 
     //   const currentUser ={
     //     email:user.email
@@ -35,24 +41,16 @@ const SignIn = () => {
     // .then(res =>res.json())
     // .then(data => {
     //   console.log(data);
-    navigate(from ,{replace:true})
     // })
   })
   .catch( (error) =>{
       console.error(error)
-  })
-  .catch( error =>{
-      console.log(error);
+      setLoginError(error.message)
   })
   }
 
   return (
     <div className="mt-20">
-      <p className="signup-text">
-        Let's connect to your workspace.
-        <br />
-        Please enter your credentials to continue
-      </p>
       <div className="min-h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full">
           <form onSubmit={handleSubmit}>
@@ -121,7 +119,12 @@ const SignIn = () => {
                 >
                   Create an account
                 </Link></span> </p>
+                <br />
+                {
+            loginError && <p className="text-red-500 py-1">{loginError}</p>
+          }
         </div>
+      
       </div>
     </div>
   );

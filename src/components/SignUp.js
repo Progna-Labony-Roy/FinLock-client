@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/UserContext";
+import useToken from "../Hooks/useToken";
 
 const SignUp = () => {
   const {
@@ -14,7 +15,12 @@ const SignUp = () => {
   const { createUser, updateUserProfile }=useContext(AuthContext);
   const [signupError, setSignupError]=useState('');
   const navigate=useNavigate();
-
+  const [createdUserEmail , setCreatedUserEmail] =useState('');
+  // const [token] = useToken(createdUserEmail);
+  
+  // if(token){
+  //   navigate('/')
+  // }
   
   const handleSignup = (data) =>{ 
     createUser(data.email, data.password) 
@@ -22,7 +28,8 @@ const SignUp = () => {
       const user =result.user;
       setSignupError('');
       console.log(user);
-      toast("User Created Successfully")
+      toast.success("User Created Successfully");
+      navigate('/');
       const userInfo ={
         displayName:data.name
       }
@@ -49,8 +56,10 @@ const SignUp = () => {
     })
     .then(res => res.json())
     .then(data =>{
-      getUserToken(email)
+      setCreatedUserEmail(email);
       console.log('saveuser',data);
+      navigate('/');
+      getUserToken(email)
     })
   }
 
@@ -63,8 +72,7 @@ const SignUp = () => {
       }
     })
   }
-
-
+  
   return (
     <div className="flex justify-center">
       <form onSubmit={handleSubmit(handleSignup)}>

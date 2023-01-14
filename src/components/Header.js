@@ -1,11 +1,14 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../Context/UserContext';
+import useToken from '../Hooks/useToken';
 import './Header.css';
 
 const Header = () => {
     const { user, logOut } =useContext(AuthContext);
 
+    const [token] =useToken(user?.email);
+        
     const handleLogOut =()=>{
         logOut()
         .then( () =>{})
@@ -14,7 +17,9 @@ const Header = () => {
     return (
         <div className='header'>
             <Link className='nav-links' to="/">Home</Link>
-            <Link className='nav-links' to="/signin">Sign In</Link>
+           {
+            token?  <Link className='nav-links' to="/">Sign In</Link> :  <Link className='nav-links' to="/signin">Sign In</Link>
+           }
             {
                 user?.uid ? <button className='nav-links' onClick={handleLogOut}>SignOut</button> : <></>
             }
