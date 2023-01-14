@@ -1,8 +1,33 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/UserContext";
 import "./SignIn.css";
 
 const SignIn = () => {
+  const {signIn} =useContext(AuthContext);
+  const navigate=useNavigate();
+  const location=useLocation();
+
+  const from = location.state?.from?.pathname || "/";
+
+  const handleSubmit = event =>{
+    event.preventDefault();
+    const form =event.target;
+    const email = form.email.value;
+    const password= form.password.value;
+    
+    signIn(email, password)
+    .then(result=>{
+      const user =result.user;
+      console.log("Registered user", user);
+      form.reset();
+      navigate(from, {replace: true});
+  })
+  .catch( error =>{
+      console.log(error);
+  })
+  }
+
   return (
     <div className="mt-20">
       <p className="signup-text">
@@ -12,7 +37,7 @@ const SignIn = () => {
       </p>
       <div className="min-h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full">
-          <form action="#" method="POST">
+          <form onSubmit={handleSubmit}>
             <div className="shadow-sm -space-y-px">
               <div>
                 <label htmlFor="email-address" className="sr-only">
@@ -74,7 +99,7 @@ const SignIn = () => {
               </button>
             </div>
           </form>
-          <p>New user? <span><Link className="text-indigo-600 hover:text-green-500"
+          <p>New user? <span><Link to="/signup" className="text-indigo-600 hover:text-green-500"
                 >
                   Create an account
                 </Link></span> </p>
