@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/UserContext";
 
 const SignUp = () => {
-    const { createUser } = useContext(AuthContext);
+    const { updateUserProfile,createUser } = useContext(AuthContext);
+    const navigate=useNavigate();
     
   const handleSubmitSignup = (event) => {
     event.preventDefault();
@@ -11,15 +12,57 @@ const SignUp = () => {
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    
+  
+
     createUser(email, password)
     .then(result=>{
         const user =result.user;
-        console.log("Registered user", user);
+        handleUpdateUserProfile(name);
+        
+        const currentUser ={
+          email:user?.email
+        }
+         fetch('http://localhost:5000/users',{
+      method : 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(currentUser)
+    })
+    .then(res =>res.json())
+    .then(data => {
+      console.log(data)
+    });
+
+    
+    fetch('http://localhost:5000/jwt',{
+    method : 'POST',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify(currentUser)
+  })
+  .then(res =>res.json())
+  .then(data => {
+    console.log(data);
+    localStorage.setItem('accessToken', data.token)
+    navigate('/');
+  })
+
+        
     })
     .catch( error =>{
         console.log(error);
     })
+
+    const handleUpdateUserProfile = (name) =>{
+      const profile ={
+        displayName: name
+      }
+      updateUserProfile(profile)
+      .then( ()=>{})
+      .catch(error => console.error(error))
+    }
   };
 
   return (
