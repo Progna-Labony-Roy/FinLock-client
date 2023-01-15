@@ -79,7 +79,7 @@ const SignUp = () => {
     <div className="flex justify-center">
       <form onSubmit={handleSubmit(handleSignup)}>
         <div className="shadow-sm -space-y-px">
-        <p className="signup-text my-4">
+        <p className="signup-text text-sm mt-12 mb-4 text-indigo-700">
         Let's connect to your workspace.
         <br />
         Please enter your credentials to continue
