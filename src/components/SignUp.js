@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/UserContext";
+import useTitle from "../Hooks/useTitle";
 import useToken from "../Hooks/useToken";
 
 const SignUp = () => {
@@ -15,6 +16,7 @@ const SignUp = () => {
   const { createUser, updateUserProfile }=useContext(AuthContext);
   const [signupError, setSignupError]=useState('');
   const navigate=useNavigate();
+  useTitle("Sign Up")
   const [createdUserEmail , setCreatedUserEmail] =useState('');
   // const [token] = useToken(createdUserEmail);
   

@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/UserContext";
+import useTitle from "../Hooks/useTitle";
 import useToken from "../Hooks/useToken";
 import "./SignIn.css";
 
@@ -10,6 +11,7 @@ const SignIn = () => {
   const [token] =useToken(user?.email);
   const navigate=useNavigate();
   const [loginError ,setLoginError] = useState('');
+  useTitle("Sign In")
 
   if(token){
     navigate('/')

@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import { useQuery } from "react-query";
 import { AuthContext } from "../Context/UserContext";
+import useTitle from "../Hooks/useTitle";
 
 const Home = () => {
   const { user, logOut } = useContext(AuthContext);
+  useTitle("Home")
 
   const url = `https://zaperon-signin-server.vercel.app/users?email=${user?.email}`;
 
@@ -16,9 +18,9 @@ const Home = () => {
         },
         
       });
-      if(res.status === 401 || res.status === 403){
-        return logOut();
-     }
+    //   if(res.status === 401 || res.status === 403){
+    //     return logOut();
+    //  }
       const data = await res.json();
       console.log(users);
       return data;
